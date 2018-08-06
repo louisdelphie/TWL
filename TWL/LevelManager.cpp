@@ -14,21 +14,19 @@
 using namespace sf;
 using namespace std;
 
+LevelManager::LevelManager()
+{
+	NUM_LEVELS = LevelManager::getNumberOfLevels();
+}
 
 int ** LevelManager::nextLevel(VertexArray & rVaLevel)
 {
 	m_LevelSize.x = 0;
 	m_LevelSize.y = 0;
 
-	// Get or set the number of levels
-	if (LevelManager::getNumberOfLevels() == 0)
-	{
-		LevelManager::setNumberOfLevels();
-	}
-
 	// Get the next level 
 	m_CurrentLevel++;
-	if (m_CurrentLevel > LevelManager::getNumberOfLevels())
+	if (m_CurrentLevel > NUM_LEVELS)
 	{
 		m_CurrentLevel = 1;
 		m_TimeModifier -= .1f;
@@ -39,33 +37,33 @@ int ** LevelManager::nextLevel(VertexArray & rVaLevel)
 	switch (m_CurrentLevel)
 	{
 	case 1:
-		levelToLoad = "levels/level1.txt";
+		levelToLoad = "levels/l_1_one.level";
 		m_StartPosition.x = 100;
 		m_StartPosition.y = 100;
 		m_BaseTimeLimit = 30.0f;
 		break;
 
 	case 2:
-		levelToLoad = "levels/level2.txt";
+		levelToLoad = "levels/l_2_two.level";
 		m_StartPosition.x = 100;
 		m_StartPosition.y = 3600;
 		m_BaseTimeLimit = 100.0f;
 		break;
 
 	case 3:
-		levelToLoad = "levels/level3.txt";
+		levelToLoad = "levels/l_3_three.level";
 		m_StartPosition.x = 1250;
 		m_StartPosition.y = 0;
 		m_BaseTimeLimit = 30.0f;
 		break;
 
 	case 4:
-		levelToLoad = "levels/level4.txt";
+		levelToLoad = "levels/l_4_four.level";
 		m_StartPosition.x = 50;
 		m_StartPosition.y = 200;
 		m_BaseTimeLimit = 50.0f;
 		break;
-
+		
 	} // End swith
 
 	ifstream inputFile(levelToLoad);
@@ -174,11 +172,17 @@ Vector2f LevelManager::getStartPosition()
 
 int LevelManager::getNumberOfLevels()
 {
+	if (NUM_LEVELS == 0)
+	{
+		LevelManager::setNumberOfLevels();
+	}
+
 	return NUM_LEVELS;
 }
 
 void LevelManager::setNumberOfLevels()
 {
+
 	_finddata_t data;
 	int fileCount = 0;
 	int findFirstDir = _findfirst("levels/*.level", &data);
