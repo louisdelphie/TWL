@@ -55,7 +55,7 @@ void Engine::update(float dtAsSeconds)
 		// Have Thomas and Bob run out of time?
 		if (m_TimeRemaining <= 0)
 		{
-			m_NewLevelRequired = true;
+			m_NewLevelRequired = false;
 		}
 
 	}// End if playing
@@ -122,4 +122,11 @@ void Engine::update(float dtAsSeconds)
 		m_Hud.setLevel(ssLevel.str());
 		m_FramesSinceLastHUDUpdate = 0;
 	}
+
+	// Update the particles
+	if (m_PS.running())
+	{
+		m_PS.update(dtAsSeconds);
+	}
+
 } // End of update function

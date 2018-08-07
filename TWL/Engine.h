@@ -6,6 +6,7 @@
 #include "LevelManager.h"
 #include "SoundManager.h"
 #include "HUD.h"
+#include "ParticleSystem.h"
 
 using namespace sf;
 
@@ -22,6 +23,9 @@ public:
 private:
 	// The texture holder
 	TextureHolder th;
+
+	// Create a particle system
+	ParticleSystem m_PS;
 
 	// Thomas and his friend , bob
 	Thomas m_Thomas;
@@ -66,6 +70,9 @@ private:
 	// Declare a sprite and a Texture for the background
 	Sprite m_BackgroundSprite;
 	Texture m_BackgroundTexture;
+
+	// Declare a shader for the background
+	Shader m_RippleShader;
 
 	// Is the game currently playing?
 	bool m_Playing = false;
